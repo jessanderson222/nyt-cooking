@@ -1,5 +1,5 @@
 class Api::V1::CollectionsController < ApplicationController
-    before_action :find_collection, only: [:update]
+    before_action :find_collection, only: [:update, :collection_recipes]
     def index
         @collections = Collection.all
         render json: @collections
@@ -15,6 +15,9 @@ class Api::V1::CollectionsController < ApplicationController
         else
             render json: { errors: @collection.errors.full_messages }, status: :unprocessible_entity
         end
+    end
+    def collection_recipes
+        @recipes.where(collection_id: @collection.id)
     end
     private
     def collection_params

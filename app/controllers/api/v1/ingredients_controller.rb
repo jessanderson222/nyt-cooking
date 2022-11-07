@@ -1,5 +1,5 @@
 class Api::V1::IngredientsController < ApplicationController
-    before_action :find_ingredient, only: [:update, :destroy, recipes_ingredient]
+    before_action :find_ingredient, only: [:update, :destroy, :recipes_ingredients]
     def index
         @ingredients = Ingredient.all
         render json: @ingredients
@@ -12,7 +12,7 @@ class Api::V1::IngredientsController < ApplicationController
        @ingredient.destroy
        render json: { message: "removed" }, status: :ok
     end
-    def recipes_ingredient
+    def recipes_ingredients
         @recipes_ingredient.where(ingredient_id: @ingredient.id)
     end
     private
