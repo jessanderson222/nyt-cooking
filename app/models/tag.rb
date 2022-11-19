@@ -1,3 +1,4 @@
 class Tag < ApplicationRecord
-    belongs_to :recipe
+    has_many :recipes_tags
+    has_many :recipes, through: :recipes_tags
 end

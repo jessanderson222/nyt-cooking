@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_11_06_231112) do
+ActiveRecord::Schema.define(version: 2022_11_19_024603) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,6 +44,8 @@ ActiveRecord::Schema.define(version: 2022_11_06_231112) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "collection_id"
+    t.string "name"
+    t.string "author"
     t.index ["collection_id"], name: "index_recipes_on_collection_id"
   end
 
@@ -52,6 +54,13 @@ ActiveRecord::Schema.define(version: 2022_11_06_231112) do
     t.bigint "ingredient_id"
     t.index ["ingredient_id"], name: "index_recipes_ingredients_on_ingredient_id"
     t.index ["recipe_id"], name: "index_recipes_ingredients_on_recipe_id"
+  end
+
+  create_table "recipes_tags", force: :cascade do |t|
+    t.bigint "recipe_id"
+    t.bigint "tag_id"
+    t.index ["recipe_id"], name: "index_recipes_tags_on_recipe_id"
+    t.index ["tag_id"], name: "index_recipes_tags_on_tag_id"
   end
 
   create_table "tags", force: :cascade do |t|
@@ -74,5 +83,7 @@ ActiveRecord::Schema.define(version: 2022_11_06_231112) do
   add_foreign_key "recipes", "collections"
   add_foreign_key "recipes_ingredients", "ingredients"
   add_foreign_key "recipes_ingredients", "recipes"
+  add_foreign_key "recipes_tags", "recipes"
+  add_foreign_key "recipes_tags", "tags"
   add_foreign_key "tags", "recipes"
 end
